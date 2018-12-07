@@ -81,8 +81,8 @@ public class PMICalculator implements Callable<Result>{
 				
 				Triple predicatePath = new Triple(NodeFactory.createVariable("s"), inputStatement.getPredicate().asNode(), NodeFactory.createVariable("o"));
 				
-				SelectBuilder predPathBuilder = new SelectBuilder().addVar("COUNT(*)", "c").addWhere(firstPath).addWhere(secondPath).addWhere(thirdPath).
-						addWhere(predicatePath);
+				SelectBuilder predPathBuilder = new SelectBuilder().addVar("COUNT(*)", "c").addWhere(predicatePath).addWhere(firstPath).addWhere(secondPath).
+						addWhere(thirdPath);
 				
 				QueryExecution qe2 = qef.createQueryExecution(predPathBuilder.build());
 
@@ -201,6 +201,7 @@ public class PMICalculator implements Callable<Result>{
 	public Result call() throws Exception {
 
 		double score = calculatePMIScore();
+		System.out.println("Score for path "+this.path+" is "+score);
 		Result result = new Result(this.path, this.inputStatement.getPredicate(), score);
 		return result;
 

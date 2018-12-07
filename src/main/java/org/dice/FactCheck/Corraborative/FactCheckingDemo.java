@@ -17,7 +17,7 @@ public class FactCheckingDemo {
 		
 		org.apache.log4j.PropertyConfigurator.configure(FactChecking.class.getClassLoader().getResource("properties/log4j.properties"));
 		FactChecking.init();
-		FactChecking.checkFacts(getTestModel(), "rw_birthplace" , 2092);
+		FactChecking.checkFacts(getTestModel(), "wb" , 1001);
 
 	}
 	
@@ -25,7 +25,7 @@ public class FactCheckingDemo {
         final Model model = ModelFactory.createDefaultModel();
         //model.read(FactCheckingDemo.class.getClassLoader().getResourceAsStream("Warren_Buffet.ttl"), null, "TURTLE");
         //System.out.println(FactCheckingDemo.class.getClassLoader().getResourceAsStream("Synthetic_US_Vice_President.nt"));
-        model.read(FactCheckingDemo.class.getClassLoader().getResourceAsStream("Real_World_Birth_Place.nt"), null, "N-TRIPLES");
+        model.read(FactCheckingDemo.class.getClassLoader().getResourceAsStream("Warren_Buffet.nt"), null, "N-TRIPLES");
         //model.read(FactCheckingDemo.class.getClassLoader().getResourceAsStream("Test.nt"), null, "N-TRIPLES");
         return model;
     }

@@ -54,7 +54,7 @@ public class PathGenerator implements Callable<PathQuery>{
 			ParameterizedSparqlString paraPathQuery = new ParameterizedSparqlString("SELECT ?p1 where "
 					+ "\n { \n"+queryBuilder+" . \n"
 					+ "FILTER(?p1 != <"+input.getPredicate()+">)"+"\n"
-					+ "FILTER(strstarts(str(?p),"+ontology+")) \n }");
+					+ "FILTER(strstarts(str(?p1),"+ontology+")) \n }");
 			paraPathQuery.setParam("s", input.getSubject());
 			paraPathQuery.setParam("o", input.getObject());
 			
@@ -107,6 +107,9 @@ public class PathGenerator implements Callable<PathQuery>{
 					+"FILTER(strstarts(str(?p1),"+ontology+"))"
 					+"FILTER(strstarts(str(?p2),"+ontology+"))"
 					+"FILTER(strstarts(str(?p3),"+ontology+"))"
+					+"FILTER(?p1 != ?p2) \n"
+					+"FILTER(?p2 != ?p3) \n"
+					+"FILTER(?p1 != ?p3) \n"
 					+"FILTER(!ISLITERAL(?x1)) \n"
 					+"FILTER(!ISLITERAL(?x2)) \n }");
 			paraPathQuery.setParam("s", input.getSubject());

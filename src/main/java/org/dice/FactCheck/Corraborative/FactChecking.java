@@ -56,7 +56,7 @@ public class FactChecking {
 		final Logger LOGGER = LoggerFactory.getLogger(FactChecking.class);
 		
 		QueryExecutionFactoryHttp qef = new QueryExecutionFactoryHttp("http://131.234.29.111:8890/sparql");
-		Property property = ResourceFactory.createProperty("http://dbpedia.org/ontology/birthPlace");
+		Property property = ResourceFactory.createProperty("http://dbpedia.org/ontology/profession");
 		
 		SelectBuilder predicate_Occurrence = new SelectBuilder().addPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		predicate_Occurrence.addPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
@@ -88,9 +88,9 @@ public class FactChecking {
 		SelectBuilder object_Triples = new SelectBuilder().addPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		object_Triples.addPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
 		object_Triples.addVar("count(?s)", "?c");
-		object_Triples.addWhere(NodeFactory.createVariable("x"), "^rdfs:range", property.asNode());
-		object_Triples.addWhere(NodeFactory.createVariable("s"), "rdf:type", NodeFactory.createVariable("x"));
-		//object_Triples.addWhere(NodeFactory.createVariable("s"), "rdf:type", NodeFactory.createURI("http://dbpedia.org/ontology/Person"));
+		//object_Triples.addWhere(NodeFactory.createVariable("x"), "^rdfs:range", property.asNode());
+		//object_Triples.addWhere(NodeFactory.createVariable("s"), "rdf:type", NodeFactory.createVariable("x"));
+		object_Triples.addWhere(NodeFactory.createVariable("s"), "rdf:type", NodeFactory.createURI("http://dbpedia.org/ontology/Person"));
 		//object_Triples.addWhere(NodeFactory.createVariable("s"), "rdf:type", NodeFactory.createURI("http://dbpedia.org/ontology/University"));
 
 		Query query_Object_Triples = object_Triples.build();
@@ -128,7 +128,7 @@ public class FactChecking {
 			int counter =0;			
 			//Statement stmt = prediatetIterator.nextStatement();
 
-			for (int j=1; j<=3; j++)
+			for (int j=1; j<=1; j++)
 			{			
 				try {
 
@@ -174,6 +174,7 @@ public class FactChecking {
 					PMICalculator pc = new PMICalculator(entry.getKey(), entry.getValue(), inputStatement, pathQuery.getPathLength(),
 							count_predicate_Occurrence, count_subject_Triples, count_object_Triples, qef);
 					double score1 = pc.calculatePMIScore();
+					System.out.println("Score for path "+entry.getKey()+" is "+score1);
 					Result result = new Result(entry.getKey(), inputStatement.getPredicate(), score1);
 					results.add(result);
 					k++;
